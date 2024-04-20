@@ -1,9 +1,21 @@
 import { convertInputToString } from "./utils.js";
 
 export class Table {
-  constructor(panel) {
-    this.tableSlot = panel.content;
+  constructor({ content }) {
+    this.tableSlot = content;
     this.tableContent = null;
+    this._row = 0; // текущая выбранная строка в таблице. Нужна чтобы выводить информацию в подчиненное окно
+  }
+
+  get rowObject() {
+    return this.tableContent.data[this._row];
+  }
+
+  /**
+   * @param {Number} value
+   */
+  set currentRow(value) {
+    this._row = parseInt(value);
   }
 
   update(titleObject, cd) {
@@ -26,7 +38,7 @@ export class Table {
     this.tableSlot.appendChild(tt);
   }
 
-  buildTable(panel, headerObj) {
+  buildTable() {
     const { order, header, data } = this.tableContent;
     //создаем таблицу
     // сначала контейнел для таблицы
@@ -34,11 +46,12 @@ export class Table {
     tc.className = "table";
     this.tableSlot.appendChild(tc);
     // затем саму таллицу
-    const tb = document.createElement("table");
-    tc.appendChild(tb);
+
+    this.table = document.createElement("table");
+    tc.appendChild(this.table);
     // ее заголовок
     const th = document.createElement("tr");
-    tb.appendChild(th);
+    this.table.appendChild(th);
 
     // и сами данные
     order.forEach((el) => {
@@ -46,9 +59,10 @@ export class Table {
       thd.innerText = header[el];
       th.appendChild(thd);
     });
-    data.forEach((element) => {
+    data.forEach((element, index) => {
       const tr = document.createElement("tr");
-      tb.appendChild(tr);
+      tr.dataset.id = index;
+      this.table.appendChild(tr);
       if (element.hasOwnProperty("active")) {
         if (!element.active) {
           tr.classList.add("not_active");

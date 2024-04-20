@@ -22,19 +22,28 @@ export class View {
     const titleObject = { entnty: "Информация о фирмах", name: "", date };
     this.mainPanel.table.update(titleObject, cd);
 
-    const firmId = cd.data[0]["id"];
-    const firmName = cd.data[0]["name"];
-    await this.getSideInfo(firmId, firmName, date);
+    await this.getSideInfo(this.mainPanel.table.rowObject, date);
+    const x = this.tableListen.bind(this, date);
+    this.mainPanel.table.table.addEventListener("click", x);
   }
 
-  async getSideInfo(firmId, firmName, date) {
-    const URL = `http://127.0.0.1:5000/rating_history?firm=${firmId}&date=${date}`;
+  tableListen(date, event) {
+    const cell = event.target;
+    const selectedRow = cell.closest("tr");
+    if (selectedRow) {
+      this.mainPanel.table.currentRow = selectedRow.dataset.id;
+      this.getSideInfo(this.mainPanel.table.rowObject, date);
+    }
+  }
+
+  async getSideInfo({ id, name }, date) {
+    const URL = `http://127.0.0.1:5000/rating_history?firm=${id}&date=${date}`;
     const data = await fetch(URL);
     const cd = await data.json();
 
     const titleObject = {
       entnty: "Сведения о фирме",
-      name: `"${firmName}"`,
+      name: `"${name}"`,
       date,
     };
     this.sidePanel.table.update(titleObject, cd);
