@@ -52,7 +52,6 @@ export class Timer {
     const e = new CustomEvent("dateChanged", {
       detail: { currentDate: this.mainDate.value },
     });
-    console.log("пустил петуха");
     this.timerElement.dispatchEvent(e);
   }
 

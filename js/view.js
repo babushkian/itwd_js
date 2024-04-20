@@ -17,27 +17,26 @@ export class View {
 
   async getStat(date) {
     const URL = `http://127.0.0.1:5000/${this.mainTabUrl}/${date}`;
-    console.log(URL);
     const data = await fetch(URL);
-    this.mainPanel.jsonContent = await data.json();
+    const cd = await data.json();
     const titleObject = { entnty: "Информация о фирмах", name: "", date };
-    this.mainPanel.table.update(titleObject);
+    this.mainPanel.table.update(titleObject, cd);
 
-    const firmId = this.mainPanel.jsonContent.data[0]["id"];
-    const firmName = this.mainPanel.jsonContent.data[0]["name"];
+    const firmId = cd.data[0]["id"];
+    const firmName = cd.data[0]["name"];
     await this.getSideInfo(firmId, firmName, date);
   }
 
   async getSideInfo(firmId, firmName, date) {
     const URL = `http://127.0.0.1:5000/rating_history?firm=${firmId}&date=${date}`;
     const data = await fetch(URL);
-    this.sidePanel.jsonContent = await data.json();
+    const cd = await data.json();
 
     const titleObject = {
       entnty: "Сведения о фирме",
       name: `"${firmName}"`,
       date,
     };
-    this.sidePanel.table.update(titleObject);
+    this.sidePanel.table.update(titleObject, cd);
   }
 }

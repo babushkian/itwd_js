@@ -7,7 +7,6 @@ export class Panel {
     this.currentTab = null;
     this.tabObject = tabObj;
     this.createPanel(name);
-    this.jsonContent = null;
     this.table = new Table(this);
   }
   createPanel(name) {

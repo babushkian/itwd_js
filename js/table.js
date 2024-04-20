@@ -2,14 +2,17 @@ import { convertInputToString } from "./utils.js";
 
 export class Table {
   constructor(panel) {
-    this.root = panel.tabsPanel;
     this.tableSlot = panel.content;
-    this.tableContent = panel.jsonContent;
-    console.log("jsonContent: ", panel.jsonContent);
-    // this.titleObject = titleObject;
+    this.tableContent = null;
   }
 
-  update(titleObject) {
+  update(titleObject, cd) {
+    this.tableContent = cd;
+    // удаляем созданные заголовок и таблицу
+    while (this.tableSlot.firstChild) {
+      this.tableSlot.removeChild(this.tableSlot.firstChild);
+    }
+
     this.createTitle(titleObject);
     this.buildTable();
   }
@@ -20,18 +23,11 @@ export class Table {
       titleObject.name
     } на ${convertInputToString(titleObject.date)}`;
     tt.className = "title";
-    this.root.appendChild(tt);
+    this.tableSlot.appendChild(tt);
   }
 
   buildTable(panel, headerObj) {
     const { order, header, data } = this.tableContent;
-    // удаляем созданные заголовок и таблицу
-    while (this.tableSlot.firstChild) {
-      this.tableSlot.removeChild(this.tableSlot.firstChild);
-    }
-    // создаем заголовок таблицы
-    createTitle(this.tableSlot, headerObj);
-
     //создаем таблицу
     // сначала контейнел для таблицы
     const tc = document.createElement("div");
