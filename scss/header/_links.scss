@@ -1,0 +1,79 @@
+﻿@import "../variables/var_header";
+// @import "../font";
+
+$header-buttons-fs: 1.1rem;
+$header-fs: 1.25rem;
+$header-fs-select: 1.25rem;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: $bg-color;
+  color: #e0e0f8;
+  justify-content: space-between;
+  align-items: center;
+  height: $header-heigth;
+  min-width: 100vw;
+  font-weight: 500;
+  font-size: $header-fs;
+  box-shadow: 0 0 5px #000;
+}
+
+.header_row {
+  min-width: 360px;
+  margin: 0.5rem auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  list-style-type: none;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .option_active a {
+    font-size: $header-fs-select;
+    font-weight: 700;
+
+    color: #fff9dc;
+    text-decoration: underline;
+  }
+
+  &.timer {
+    gap: 0.5rem;
+    justify-content: center;
+  }
+}
+
+.timer {
+  margin: 0.5rem auto;
+
+  button {
+    font-family: "FiraSans", Arial, Helvetica, sans-serif;
+    font-size: $header-buttons-fs;
+    background-color: #e0e0f8;
+    border-radius: 1px;
+    margin: 0 0.2rem;
+    padding: 0 0.35rem;
+    height: 25px;
+    min-width: 2rem;
+    border: 0;
+    &:hover:enabled {
+      opacity: 0.9;
+    }
+  }
+
+  input {
+    font-family: "FiraSans", Arial, Helvetica, sans-serif;
+    height: 25px;
+    width: 140px;
+    font-size: $header-fs;
+    background-color: #e0e0f8;
+    border-radius: 2px;
+  }
+}

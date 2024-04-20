@@ -1,0 +1,77 @@
+﻿@import "../variables/var_header";
+
+$side-color: hsl(187, 24%, 86%);
+$tab-inactive: hsl(187, 20%, 74%);
+$content-max-width: 1900px;
+
+$tab-height: 2rem;
+
+.content {
+  max-width: $content-max-width;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  // font-size: 14px;
+  line-height: 1.3rem;
+  font-weight: 400;
+  height: 100vh;
+
+  padding-top: $header-heigth;
+  margin: auto;
+  overflow-y: none;
+}
+
+.tabs_panel {
+  display: flex;
+  background-color: $bg-color;
+  min-height: 30px;
+
+  button.tab {
+    margin: 5px 2px 0 2px;
+    font-size: inherit;
+    min-width: 100px;
+    border-radius: 6px 6px 0 0;
+    border: none;
+    background-color: $tab-inactive;
+    cursor: pointer;
+    &.active_tab {
+      background-color: $side-color;
+    }
+
+    span {
+      // display: inline-block;
+      margin: 0 0.5rem;
+      text-align: center;
+      font-size: 1rem;
+      font-family: "FiraSans";
+    }
+  }
+}
+
+.half {
+  background-color: $side-color;
+  height: 100%;
+  width: 100%;
+  border-right: 1px solid #222;
+  display: flex;
+  flex-direction: column;
+}
+
+.content__window {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+
+  .title {
+    margin: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .table {
+    overflow-y: auto;
+  }
+}

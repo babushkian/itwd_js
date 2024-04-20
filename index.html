@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Артель</title>
+
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <div
+      id="request"
+      style="display: none"
+      data-url="fstatus"
+      data-class="firms"
+    ></div>
+    <div class="header">
+      <div class="header_row">
+        <div class="menu_option option_people">
+          <a href="#"> Люди </a>
+        </div>
+        <div class="menu_option option_firms">
+          <a href="#">Фирмы</a>
+        </div>
+      </div>
+      <div class="header_row timer">
+        <button id="start_date" class="left">нач</button>
+        <button id="month-minus" class="left"><мес</button>
+        <button id="day-minus" class="left"><ден</button>
+        <input
+          type="date"
+          id="main-date"
+          value="2007-11-01"
+          required
+          min="2005-01-01"
+          max="2014-01-01"
+        />
+
+        <button id="day-plus" class="right">ден></button>
+        <button id="month-plus" class="right">мес></button>
+        <button id="end_date" class="right">кон</button>
+      </div>
+    </div>
+    <div class="content"></div>
+    <!-- <script src="stat_users.js"></script>
+    <script src="header.js"></script> -->
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+﻿@import "../variables/var_table";
+
+table {
+  /* border: 1px solid black; */
+
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-collapse: collapse;
+  min-width: 360px;
+  margin: 1rem auto;
+  border: 1px solid $table-border;
+  line-height: 1.3em;
+
+  th {
+    background-color: $table-header_bg;
+    color: $table-header;
+    font-weight: 500;
+    padding: 0.5em 1em;
+  }
+
+  tr {
+    border-bottom: 1px solid $table-border;
+    background-color: $table-row;
+
+    &:nth-child(even) {
+      background-color: $table-row-dimmed;
+    }
+
+    &:hover {
+      background-color: $table-selected;
+    }
+    &.not_active {
+      color: #999;
+    }
+    span:hover {
+      text-decoration: underline;
+    }
+  }
+
+  td {
+    padding: 0.5em 1em;
+    text-align: center;
+    min-width: 5rem;
+  }
+}
