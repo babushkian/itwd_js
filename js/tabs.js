@@ -1,8 +1,10 @@
-const mainTabObjects = [
+const mainTabs = [
   {
     id: "main_firms",
     name: "фирмы",
-    endpoint: "feq",
+    endpoint: "fstatus",
+    attributes: { date: "simDate" },
+    title: { entity: "Информация о фирмах", embedded: ["name", "simDate"] },
   },
   /*
   {
@@ -18,7 +20,7 @@ const mainTabObjects = [
   */
 ];
 
-const tabObjects = [
+const firmTabs = [
   {
     id: "firm_staff",
     name: "сотрудники",
@@ -36,13 +38,32 @@ const tabObjects = [
       embedded: ["name", "simDate"],
     },
   },
-  /*
+
   {
     id: "firm_history",
     name: "история",
     endpoint: "feq",
   },
-  */
+  {
+    id: "firm_directors",
+    name: "директора",
+    endpoint: "current_staff",
+    attributes: { firm: "id", date: "simDate" },
+    title: {
+      entity: "Директора в фирмах",
+      embedded: ["name"],
+    },
+  },
+];
+
+const peopleTabs = [
+  {
+    id: "people_info",
+    name: "сведения",
+    endpoint: "man_info",
+    attributes: { man: "id", date: "simDate" },
+    title: { entity: "Информация о человеке", embedded: ["simDate"] },
+  },
 ];
 
 import { BASE_URL } from "./utils.js";
@@ -54,4 +75,4 @@ class Tab {
   }
 }
 
-export { mainTabObjects, tabObjects, Tab };
+export { mainTabs, firmTabs, Tab };

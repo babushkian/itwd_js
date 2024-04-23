@@ -1,14 +1,19 @@
 import { Panel } from "./panels.js";
 import { SidePanel } from "./side_panel.js";
 import { Timer } from "./timer.js";
-import { mainTabObjects, tabObjects } from "./tabs.js";
+import { mainTabs, firmTabs } from "./tabs.js";
+import { Frame } from "./frame.js";
 
 export class View {
   constructor(mainTabUrl) {
+    const root = document.querySelector(".content");
     this.mainTabUrl = mainTabUrl;
     this.timer = new Timer();
-    this.mainPanel = new Panel("main", mainTabObjects);
-    this.sidePanel = new SidePanel("details", tabObjects);
+    this.left = new Frame(root, "main");
+    this.right = new Frame(root, "details");
+
+    this.mainPanel = new Panel(mainTabs, this.left.element);
+    this.firmPanel = new SidePanel(firmTabs, this.right.element);
     this.getStat(this.timer.mainDate.value);
 
     this.timer.timerElement.addEventListener("dateChanged", (e) => {
@@ -24,7 +29,7 @@ export class View {
     this.mainPanel.table.update(titleObject, cd);
 
     const incomeObj = { ...this.mainPanel.table.rowObject, simDate: date };
-    this.sidePanel.signalFromParent(incomeObj);
+    this.firmPanel.signalFromParent(incomeObj);
     const x = this.tableListen.bind(this, date);
     this.mainPanel.table.table.addEventListener("click", x);
   }
@@ -35,7 +40,7 @@ export class View {
     if (selectedRow) {
       this.mainPanel.table.currentRow = selectedRow.dataset.id;
       const incomeObj = { ...this.mainPanel.table.rowObject, simDate: date };
-      this.sidePanel.signalFromParent(incomeObj);
+      this.firmPanel.signalFromParent(incomeObj);
     }
   }
 
@@ -49,6 +54,6 @@ export class View {
       name: `"${name}"`,
       date,
     };
-    this.sidePanel.table.update(titleObject, cd);
+    this.firmPanel.table.update(titleObject, cd);
   }
 }

@@ -1,26 +1,30 @@
 import { Table } from "./table.js";
 import { BASE_URL } from "./utils.js";
 export class SidePanel {
-  constructor(name, tabObj) {
+  constructor(tabObj, root) {
+    //элемент DOM, внутри которого должна прорисовываться панель
+    this.root = root;
+    //указательна родительскую панель
+    this.parent = null;
+    // список дочерних панелей]
+    this.children = {};
     this.currentTabElement = null;
     this.currentTabIndex = 0;
     this.tabObject = tabObj;
-    this.createPanel(name);
+    this.createPanel();
     this.table = new Table(this);
     this.jsonObj = null;
+    //буду ссылаться на обьект панели по id из объекта tabObject
+    //this.children[this.tabObject[this.currentTabIndex].id]
   }
-  createPanel(name) {
-    const r = document.createElement("div");
-    r.className = `half ${name}`;
-    const root = document.querySelector(".content");
-    root.appendChild(r);
+  createPanel() {
     this.tabsPanel = document.createElement("div");
     this.tabsPanel.className = "tabs_panel";
-    r.appendChild(this.tabsPanel);
+    this.root.appendChild(this.tabsPanel);
 
     this.content = document.createElement("div");
     this.content.className = "content__window";
-    r.appendChild(this.content);
+    this.root.appendChild(this.content);
     this.buildPanel();
   }
 

@@ -3,24 +3,21 @@
 import { Table } from "./table.js";
 
 export class Panel {
-  constructor(name, tabObj) {
+  constructor(tabObj, root) {
+    this.root = root;
     this.currentTab = null;
     this.tabObject = tabObj;
-    this.createPanel(name);
+    this.createPanel();
     this.table = new Table(this);
   }
-  createPanel(name) {
-    const r = document.createElement("div");
-    r.className = `half ${name}`;
-    const root = document.querySelector(".content");
-    root.appendChild(r);
+  createPanel() {
     this.tabsPanel = document.createElement("div");
     this.tabsPanel.className = "tabs_panel";
-    r.appendChild(this.tabsPanel);
+    this.root.appendChild(this.tabsPanel);
 
     this.content = document.createElement("div");
     this.content.className = "content__window";
-    r.appendChild(this.content);
+    this.root.appendChild(this.content);
     this.buildPanel();
   }
 

@@ -30,8 +30,13 @@ export class Table {
   }
 
   createTitle(titleObject) {
-    const tt = document.createElement("div");
-    tt.innerText = `${titleObject.entnty} ${titleObject.name} на ${titleObject.simDate}`;
+    let tt = document.createElement("div");
+    tt.innerText = `${titleObject.entnty} ${titleObject.name}`;
+    console.log("дата есть: ", titleObject.simDate);
+    if (titleObject.simDate) {
+      tt.innerText += ` на ${titleObject.simDate}`;
+    }
+
     // tt.innerText = `${titleObject.entnty} ${
     //   titleObject.name
     // } на ${convertInputToString(titleObject.simDate)}`;
