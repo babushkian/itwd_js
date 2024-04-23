@@ -2,36 +2,56 @@ const mainTabObjects = [
   {
     id: "main_firms",
     name: "фирмы",
-    request: "feq",
+    endpoint: "feq",
   },
+  /*
   {
-    id: "main__staff",
+    id: "main_staff",
     name: "люди",
-    request: "feq",
+    endpoint: "feq",
   },
   {
     id: "main_statistics",
     name: "статистика",
-    request: "feq",
+    endpoint: "feq",
   },
+  */
 ];
 
 const tabObjects = [
   {
-    id: "firm_history",
-    name: "история",
-    request: "feq",
-  },
-  {
     id: "firm_staff",
     name: "сотрудники",
-    request: "feq",
+    endpoint: "current_staff",
+    attributes: { firm: "id", date: "simDate" },
+    title: { entity: "Сведения о фирме", embedded: ["name", "simDate"] },
   },
   {
     id: "firm_rating",
     name: "рейтинг",
-    request: "feq",
+    endpoint: "rating_history",
+    attributes: { firm: "id", date: "simDate" },
+    title: {
+      entity: "Сведения о струдниках фирмы",
+      embedded: ["name", "simDate"],
+    },
   },
+  /*
+  {
+    id: "firm_history",
+    name: "история",
+    endpoint: "feq",
+  },
+  */
 ];
 
-export { mainTabObjects, tabObjects };
+import { BASE_URL } from "./utils.js";
+
+class Tab {
+  constructor(initObj) {
+    this.endpoint = initObj.endpoint;
+    this.attributes = initObj.attributes;
+  }
+}
+
+export { mainTabObjects, tabObjects, Tab };

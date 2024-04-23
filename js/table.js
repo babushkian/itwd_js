@@ -31,9 +31,11 @@ export class Table {
 
   createTitle(titleObject) {
     const tt = document.createElement("div");
-    tt.innerText = `${titleObject.entnty} ${
-      titleObject.name
-    } на ${convertInputToString(titleObject.date)}`;
+    tt.innerText = `${titleObject.entnty} ${titleObject.name} на ${titleObject.simDate}`;
+    // tt.innerText = `${titleObject.entnty} ${
+    //   titleObject.name
+    // } на ${convertInputToString(titleObject.simDate)}`;
+
     tt.className = "title";
     this.tableSlot.appendChild(tt);
   }
