@@ -4,14 +4,18 @@ const mainTabs = [
     name: "фирмы",
     endpoint: "fstatus",
     attributes: { date: "simDate" },
-    title: { entity: "Информация о фирмах", embedded: ["name", "simDate"] },
+    title: { entity: "Информация о фирмах", embedded: ["simDate"] },
   },
-  /*
+
   {
     id: "main_staff",
     name: "люди",
-    endpoint: "feq",
+    endpoint: "pstatus",
+    attributes: { date: "simDate" },
+    title: { entity: "Информация о людях", embedded: ["simDate"] },
   },
+
+  /*
   {
     id: "main_statistics",
     name: "статистика",
@@ -64,6 +68,13 @@ const peopleTabs = [
     attributes: { man: "id", date: "simDate" },
     title: { entity: "Информация о человеке", embedded: ["simDate"] },
   },
+  {
+    id: "people_career",
+    name: "карьера",
+    endpoint: "man_career",
+    attributes: { man: "id", date: "simDate" },
+    title: { entity: "Информация о человеке", embedded: ["simDate"] },
+  },
 ];
 
 import { BASE_URL } from "./utils.js";
@@ -75,4 +86,4 @@ class Tab {
   }
 }
 
-export { mainTabs, firmTabs, Tab };
+export { mainTabs, firmTabs, peopleTabs, Tab };

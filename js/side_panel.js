@@ -8,28 +8,38 @@ export class SidePanel {
     this.parent = null;
     // список дочерних панелей]
     this.children = {};
+    // параметр, incomeObj передаваемый из родительского элемента. Служит для двух целей
+    // 1) из него берутся параметры для get-запроса для построения таблицы
+    // 2) из него берутся параметры для формирования заголовка (прмпример, название фирмы и дата)
+    // параметр сохраняется для того, чтобы можно было в одной панели переключаться между вкладками
+    this.incomeObj = null;
     this.currentTabElement = null;
     this.currentTabIndex = 0;
     this.tabObject = tabObj;
+    console.log("конфирурация", tabObj);
     this.createPanel();
     this.table = new Table(this);
     this.jsonObj = null;
     //буду ссылаться на обьект панели по id из объекта tabObject
     //this.children[this.tabObject[this.currentTabIndex].id]
   }
+
   createPanel() {
+    //создается место под вкладки
     this.tabsPanel = document.createElement("div");
     this.tabsPanel.className = "tabs_panel";
     this.root.appendChild(this.tabsPanel);
-
+    // создается место под таблицу с заголовком
     this.content = document.createElement("div");
     this.content.className = "content__window";
     this.root.appendChild(this.content);
-    this.buildPanel();
   }
 
-  buildPanel() {
+  drawPanel(incomeObj) {
     function listenTabPanel(event) {
+      // при переключении вкладки формируется новая таблица, this.incomeObj не меняется
+      // в соответствии с параметрами, куазанными  в конфигурационном объекте this.tabObject
+      // на один из элементов которого указывает this.currentTabIndex
       const a = event.target.closest(".tab");
       if (a && a.dataset.id != this.currentTabIndex) {
         this.currentTabElement.classList.remove("active_tab");
@@ -39,38 +49,36 @@ export class SidePanel {
         this.getInfo();
       }
     }
-
+    // создаются вкладки на панели вкладок
+    // определяется текущая вкладка и индекс текущей вкладки - указатель на конфигураионный объект
     this.tabsPanel.innerHTML = "";
     this.tabObject.forEach((tab, index) => {
       const tb = document.createElement("button");
-
       tb.className = "tab";
-
       if (!this.currentTabElement) {
         this.currentTabElement = tb;
         this.currentTabIndex = index;
         tb.classList.add("active_tab");
       }
-      // tb.setAttribute("id", tab.id);
       tb.dataset.id = index;
-
       tb.innerHTML = `<span>${tab.name}</span>`;
       this.tabsPanel.appendChild(tb);
     });
-
+    // прослушивание закоадок, чтобы менять таблицы
     const listen = listenTabPanel.bind(this);
     this.tabsPanel.addEventListener("click", (event) => {
       listen(event);
     });
+    // запрос и отрисовка табличной части
+    this.changeContent(incomeObj);
   }
 
-  async signalFromParent(incomeObj) {
+  async changeContent(incomeObj) {
     this.incomeObj = incomeObj;
     this.getInfo();
   }
 
   async getInfo() {
-    const URL = `http://127.0.0.1:5000/rating_history?firm=${this.incomeObj.id}&date=${this.incomeObj.simDate}`;
     const DATA = this.tabObject[this.currentTabIndex];
     let url = `${BASE_URL}/${DATA.endpoint}?`;
     const requestParams = [];
