@@ -24,7 +24,14 @@ export class SidePanel {
     //this.children[this.tabObject[this.currentTabIndex].id]
   }
 
+  addChild(key, child) {
+    this.children[key] = child;
+    child.parent = this;
+  }
+
   createPanel() {
+    // очищаем панель, если там была нарисована другач панель
+    this.root.innerHTML = "";
     //создается место под вкладки
     this.tabsPanel = document.createElement("div");
     this.tabsPanel.className = "tabs_panel";
@@ -76,6 +83,13 @@ export class SidePanel {
   async changeContent(incomeObj) {
     this.incomeObj = incomeObj;
     this.getInfo();
+    if (Object.keys(this.children).length !== 0) {
+      const incomeObj = {
+        ...this.table.rowObject,
+        simDate: this.incomeObj.simDate,
+      };
+      this.children["main_firms"].drawPanel(incomeObj);
+    }
   }
 
   async getInfo() {
@@ -98,7 +112,6 @@ export class SidePanel {
       titleObject[key] = this.incomeObj[key];
     });
     console.log(titleObject);
-
     this.table.update(titleObject, this.jsonObj);
   }
 }

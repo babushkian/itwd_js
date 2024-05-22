@@ -31,16 +31,13 @@ export class Table {
 
   createTitle(titleObject) {
     let tt = document.createElement("div");
-    tt.innerText = `${titleObject.entnty} ${titleObject.name}`;
-    console.log("дата есть: ", titleObject.simDate);
+    tt.innerText = `${titleObject.entnty} ${
+      titleObject.name ? titleObject.name : ""
+    }`;
+
     if (titleObject.simDate) {
-      tt.innerText += ` на ${titleObject.simDate}`;
+      tt.innerText += ` на ${convertInputToString(titleObject.simDate)}`;
     }
-
-    // tt.innerText = `${titleObject.entnty} ${
-    //   titleObject.name
-    // } на ${convertInputToString(titleObject.simDate)}`;
-
     tt.className = "title";
     this.tableSlot.appendChild(tt);
   }
